@@ -7,12 +7,12 @@ public class CovidStatSummary {
 	
 	
 	public CovidStatSummary(LocalDateTime rangeBegin, LocalDateTime rangeEnd, int numberOfNewInfections,
-			int numnerOfNewInfectionsPer100000) {
+			int numberOfNewInfectionsPer100000) {
 		super();
 		this.rangeBegin = rangeBegin;
 		this.rangeEnd = rangeEnd;
 		this.numberOfNewInfections = numberOfNewInfections;
-		this.numnerOfNewInfectionsPer100000 = numnerOfNewInfectionsPer100000;
+		this.numberOfNewInfectionsPer100000 = numberOfNewInfectionsPer100000;
 	}
 
 	LocalDateTime rangeBegin;
@@ -21,7 +21,7 @@ public class CovidStatSummary {
 	
 	int numberOfNewInfections;
 	
-	int numnerOfNewInfectionsPer100000;
+	int numberOfNewInfectionsPer100000;
 
 	public LocalDateTime getRangeBegin() {
 		return rangeBegin;
@@ -47,11 +47,11 @@ public class CovidStatSummary {
 		this.numberOfNewInfections = numberOfNewInfections;
 	}
 
-	public int getNumnerOfNewInfectionsPer100000() {
-		return numnerOfNewInfectionsPer100000;
+	public int getNumberOfNewInfectionsPer100000() {
+		return numberOfNewInfectionsPer100000;
 	}
 
-	public void setNumnerOfNewInfectionsPer100000(int numnerOfNewInfectionsPer100000) {
-		this.numnerOfNewInfectionsPer100000 = numnerOfNewInfectionsPer100000;
+	public void setNumberOfNewInfectionsPer100000(int numnerOfNewInfectionsPer100000) {
+		this.numberOfNewInfectionsPer100000 = numnerOfNewInfectionsPer100000;
 	}
 }

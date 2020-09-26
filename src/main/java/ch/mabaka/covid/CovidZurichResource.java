@@ -18,7 +18,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 
-@Path("/zurich")
+@Path("/rest/v1/zurich")
 public class CovidZurichResource {
 
 	private static final Logger LOGGER = Logger.getLogger(CovidZurichResource.class);
@@ -26,8 +26,11 @@ public class CovidZurichResource {
 	@ConfigProperty(name = "covid.csv.url", defaultValue = "https://raw.githubusercontent.com/openZH/covid_19/master/fallzahlen_kanton_total_csv_v2/COVID19_Fallzahlen_Kanton_ZH_total.csv")
 	String covidCsvUrl;
 
+	@ConfigProperty(name = "residents.canton.zh", defaultValue="1536400")
+	int numberOfResidents;
+	
 	@GET
-	@Path("/averageInfectionsPer100000Past14Days")
+	@Path("/averageInfectionsPer100000Within14Days")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response averageInfectionsPer10000Past14Days() {
 		HttpClient client = HttpClient.newHttpClient();
@@ -49,13 +52,17 @@ public class CovidZurichResource {
 					isFirstLine = false;
 				}
 				if (statEntries.size() >= 14) {
-					CovidStatEntry lastEntry = statEntries.get(statEntries.size() - 1);
-					CovidStatEntry entryBefore14Days = statEntries.get(statEntries.size() - 15);
-					LOGGER.info(lastEntry);
-					LOGGER.info(entryBefore14Days);
-					int numberOfNewInfectionsIn14Days = lastEntry.getInfectionCount() - entryBefore14Days.getInfectionCount();
-					CovidStatSummary summary = new CovidStatSummary(entryBefore14Days.getDateTime(), lastEntry.getDateTime(), numberOfNewInfectionsIn14Days, (int)(numberOfNewInfectionsIn14Days / 15.1f));
-					return Response.ok(summary).build();
+					List<CovidStatSummary> statEntryList = new ArrayList<>();
+					for(int i = 14; i < statEntries.size(); i++) {
+						CovidStatEntry lastEntry = statEntries.get(i);
+						CovidStatEntry entryBefore14Days = statEntries.get(i-14);
+						LOGGER.info(lastEntry);
+						LOGGER.info(entryBefore14Days);
+						int numberOfNewInfectionsIn14Days = lastEntry.getInfectionCount() - entryBefore14Days.getInfectionCount();
+						CovidStatSummary summary = new CovidStatSummary(entryBefore14Days.getDateTime(), lastEntry.getDateTime(), numberOfNewInfectionsIn14Days, (int)(numberOfNewInfectionsIn14Days * 100000 / numberOfResidents));	
+						statEntryList.add(summary);
+					}
+					return Response.ok(statEntryList).build();
 				} else {
 					return Response.ok("To view data").build();
 				}
