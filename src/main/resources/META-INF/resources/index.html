@@ -7,7 +7,9 @@
 	<script src="./Chart.min.js"></script>
   </head>
   <body>
-  	<canvas id="myChart" width="400" height="400"></canvas>
+  	<div class="chart-container" style="position: relative; height:60vh; width:96vw">
+  		<canvas id="myChart" width="640" height="400"></canvas>
+  	</div>
 	<script>
 		loadData = () => {
 			fetch('./rest/v1/zurich/averageInfectionsPer100000Within14Days')
@@ -29,12 +31,24 @@
 	    			}]
 	    		}, 
 	    		options: {
+	    			title: {
+	    				text: 'Number of COVID-19 infections per 100000 residents in 14 days in canton of Zurich',
+	    				display: true,
+	    			},
+	    			responsive: true,
+	    			maintainAspectRatio: false,
 	    	        scales: {
 	    	            yAxes: [{
 	    	                ticks: {
 	    	                    beginAtZero: true
 	    	                }
 	    	            }]
+	    	        },
+	    	        legend: {
+	    	            display: false,
+	    	            labels: {
+	    	                fontColor: 'rgb(255, 99, 132)'
+	    	            }
 	    	        }
 	    	    }
 	    	});
