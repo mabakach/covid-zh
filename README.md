@@ -1,5 +1,11 @@
-# covid-zh project
+# Project COVID ZH
 
+## Function
+The COVID ZH application generates graphs from the COVID-19 raw data published by the canton of Zurich.
+The raw data can be found here: [https://github.com/openZH/covid_19](https://github.com/openZH/covid_19)
+ 
+
+## Background
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
